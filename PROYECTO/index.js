@@ -1,7 +1,7 @@
 // 1 - Invocamos a Express
 const express = require('express');
 const app = express();
-
+const User = require('./models/User');
 //2 - Para poder capturar los datos del formulario (sin urlencoded nos devuelve "undefined")
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());//además le decimos a express que vamos a usar json
@@ -32,7 +32,7 @@ app.use(session({
 // 8 - Invocamos a la conexion de la DB
 const connection = require('./database/db');
 
-//9 - establecemos las rutas
+//rutas login
 	app.get('/login',(req, res)=>{
 		res.render('login');
 	})
@@ -40,7 +40,15 @@ const connection = require('./database/db');
 	app.get('/register',(req, res)=>{
 		res.render('register');
 	})
+	const uploadRoutes = require('./routes/uploadRoutes');
 
+	app.use('/upload', uploadRoutes);
+  // Ruta para obtener una imagen
+  app.get('/images/:imageName', (req, res) => {
+	const imageName = req.params.imageName;
+	// Aquí puedes buscar la imagen en la base de datos o sistema de archivos y devolverla al usuario
+	res.sendFile(__dirname + '/uploads/' + imageName);
+  });
 //10 - Método para la REGISTRACIÓN
 app.post('/register', async (req, res)=>{
 	const user = req.body.user;
@@ -55,7 +63,7 @@ app.post('/register', async (req, res)=>{
 			res.render('register', {
 				alert: true,
 				alertTitle: "Registration",
-				alertMessage: "¡Successful Registration!",
+				alertMessage: "Registro completado, Bienvenido a artHUB",
 				alertIcon:'success',
 				showConfirmButton: false,
 				timer: 1500,
@@ -69,62 +77,116 @@ app.post('/register', async (req, res)=>{
 
 
 //11 - Metodo para la autenticacion
-app.post('/auth', async (req, res)=> {
+app.post('/auth', async (req, res) => {
 	const user = req.body.user;
-	const pass = req.body.pass;    
-    let passwordHash = await bcrypt.hash(pass, 8);
+	const pass = req.body.pass;
 	if (user && pass) {
-		connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results, fields)=> {
-			if( results.length == 0 || !(await bcrypt.compare(pass, results[0].pass)) ) {    
-				res.render('login', {
-                        alert: true,
-                        alertTitle: "Error",
-                        alertMessage: "USUARIO y/o PASSWORD incorrectas",
-                        alertIcon:'error',
-                        showConfirmButton: true,
-                        timer: false,
-                        ruta: 'login'    
-                    });
-				
-				//Mensaje simple y poco vistoso
-                //res.send('Incorrect Username and/or Password!');				
-			} else {         
-				//creamos una var de session y le asignamos true si INICIO SESSION       
-				req.session.loggedin = true;                
-				req.session.name = results[0].name;
-				res.render('login', {
-					alert: true,
-					alertTitle: "Conexión exitosa",
-					alertMessage: "¡LOGIN CORRECTO!",
-					alertIcon:'success',
-					showConfirmButton: false,
-					timer: 1500,
-					ruta: ''
-				});        			
-			}			
-			res.end();
-		});
-	} else {	
-		res.send('Please enter user and Password!');
-		res.end();
+	  connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results, fields) => {
+		if (results.length === 0 || !(await bcrypt.compare(pass, results[0].pass))) {
+		  res.render('login', {
+			alert: true,
+			alertTitle: 'Error',
+			alertMessage: 'Usuario y/o contraseña incorrectas',
+			alertIcon: 'error',
+			showConfirmButton: true,
+			timer: false,
+			ruta: 'login',
+		  });
+		} else {
+		  req.session.loggedin = true;
+		  req.session.name = results[0].name;
+		  res.render('login', {
+			alert: true,
+			alertTitle: 'Conexión exitosa',
+			alertMessage: 'Bienvenido a ArtHUB',
+			alertIcon: 'success',
+			showConfirmButton: false,
+			timer: 1500,
+			ruta: '',
+		  });
+		}
+	  });
+	} else {
+	  res.send('Por favor, introduzca un usuario o contraseña correctos');
 	}
-});
+  });
 
 //12 - Método para controlar que está auth en todas las páginas
+app.get('/', (req, res) => {
+	if (req.session.loggedin) {
+	  const username = req.session.name;
+	  connection.query('SELECT * FROM users WHERE user = ?', [username], (error, results) => {
+		if (error || results.length === 0) {
+		  res.render('index', {
+			login: false,
+			name: 'Debe iniciar sesión',
+		  });
+		} else {
+		  const user = results[0];
+		  res.render('index', {
+			login: true,
+			name: req.session.name,
+			rol: user.rol,
+		  });
+		}
+	  });
+	} else {
+	  res.render('index', {
+		login: false,
+		name: 'Debe iniciar sesión',
+		rol: '',
+	  });
+	}
+  });
+
+// Ruta para la página de upload (si el usuario tiene rol "dibujante")
+app.get('/upload', (req, res) => {
+	if (req.session.loggedin) {
+	  const username = req.session.name;
+	  connection.query('SELECT * FROM users WHERE user = ?', [username], (error, results) => {
+		if (error || results.length === 0) {
+		  res.render('index', {
+			login: false,
+			name: 'Debe iniciar sesión',
+		  });
+		} else {
+		  const user = results[0];
+		  if (user.rol === 'dibujante') {
+			res.render('upload');
+		  } else {
+			res.render('index', {
+			  login: true,
+			  name: req.session.name,
+			  rol: user.rol,
+			});
+		  }
+		}
+	  });
+	} else {
+	  res.render('index', {
+		login: false,
+		name: 'Debe iniciar sesión',
+	  });
+	}
+  });
 app.get('/', (req, res)=> {
 	if (req.session.loggedin) {
-		res.render('index',{
-			login: true,
-			name: req.session.name			
-		});		
+	  res.render('index', {
+		login: true,
+		name: req.session.name,
+		rol: req.session.rol  // Asegúrate de tener esta línea
+	  });    
 	} else {
-		res.render('index',{
-			login:false,
-			name:'Debe iniciar sesión',			
-		});				
+	  res.render('index', {
+		login: false,
+		name: 'Debe iniciar sesión',
+		rol: ''  // Asegúrate de tener esta línea
+	  });       
 	}
 	res.end();
-});
+  });
+
+// Ruta para la página de upload (si el usuario tiene rol "dibujante")
 
 
 //función para limpiar la caché luego del logout
