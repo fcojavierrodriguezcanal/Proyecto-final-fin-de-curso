@@ -117,7 +117,7 @@ body {
     height: calc(100vh - 50px);
   }
 }
-/* Login form */
+
 .login-form {
   width: 300px;
   margin: 0 auto;
@@ -137,7 +137,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Estilos boton LOGIN*/
+
 .btn-login {
   width: 100%;
   padding: 15px;
@@ -159,7 +159,7 @@ body {
   box-shadow: 0 0 0 3px rgba(4, 37, 58, 0.25);
 }
 
-/* Estilos boton REGISTER*/
+
 .btn-register {
   width: 100%;
   padding: 15px;
@@ -174,7 +174,7 @@ body {
   
 
   margin-top: 20px;
-  /* Para dar la apariencia de un boton */
+  
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
@@ -185,7 +185,7 @@ body {
   box-shadow: 0 0 0 3px #e1ddb6;
 }
 
-/* Estilos de link para ir a LOGIN*/
+
 .a-login:link,
 .a-login:visited {
   background-color: white;
@@ -204,7 +204,6 @@ body {
   color: white;
 }
 
-/* Estilos de link para realizar el LOGOUT*/
 .a-logout:link,
 .a-logout:visited {
   background-color: white;
@@ -239,7 +238,7 @@ body {
   background-color: #4c837a;
   color: white;
 }
-/* Estilos boton CANCELAR*/
+
 .btn-cancel {
   width: 50%;
   padding: 15px;
@@ -252,7 +251,7 @@ body {
   color: #ffffff;
   text-align: center;
   margin-top: 20px;
-  /* Para dar la apariencia de un boton */
+
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
@@ -268,7 +267,6 @@ body {
   box-shadow: 0 0 0 3px #6b7280;
 }
 
-/* Estilos boton GUARDAR*/
 .btn-save {
   width: 50%;
   padding: 15px;
@@ -280,7 +278,7 @@ body {
   font-size: medium;
   color: #ffffff;
   margin-top: 20px;
-  /* Para dar la apariencia de un boton */
+
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
@@ -296,7 +294,6 @@ body {
   box-shadow: 0 0 0 3px #1e3a8a;
 }
 
-/* form User Registration */
 .register-form {
   width: 400px;
   margin: 0 auto;
@@ -321,7 +318,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Estilos para el select dropdown */
 .select-css {
   display: block;
   font-size: 16px;
