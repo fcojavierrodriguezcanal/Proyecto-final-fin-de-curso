@@ -2,9 +2,12 @@
 <html>
 <head>
   <title>ArtHub</title>
+  <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
-
+  <header class="navbar">
+    <%- include('./components/navbar.ejs') %>
+  </header>
   <h1>Galería</h1>
   <p>En esta sección encontrarás los dibujos de otros usuarios y poder descargarlos gratuitamente</p>
   <% for (var i = 0; i < images.length; i++) { %>
