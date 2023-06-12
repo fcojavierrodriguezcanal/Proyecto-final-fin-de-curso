@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mostrar Imágenes</title>
+</head>
+<body>
+  <h1>Imágenes</h1>
+  
+  <% for (var i = 0; i < images.length; i++) { %>
+    <img src="/uploads/<%= images[i] %>" alt="Imagen <%= i+1 %>">
+  <% } %>
+  
+</body>
+</html>

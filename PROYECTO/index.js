@@ -186,9 +186,10 @@ app.get('/', (req, res)=> {
 	res.end();
   });
 
-// Ruta para la página de upload (si el usuario tiene rol "dibujante")
+// Ruta para Galeria
+const galleryRoutes = require('./routes/galleryRoutes');
 
-
+app.use('/', galleryRoutes);
 //función para limpiar la caché luego del logout
 app.use(function(req, res, next) {
     if (!req.user)
