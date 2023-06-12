@@ -9,25 +9,39 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'image/png') {
-      cb(null, true);
-    } else {
-      cb(new Error('El archivo debe ser formato PNG'));
-    }
-  },
-});
+
+  const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/webp') {
+        cb(null, true);
+      } else {
+        cb(new Error('El archivo debe ser formato PNG, JPG o WEBP'));
+      }
+    },
+  });
 
 // Controlador para manejar la subida de archivos
 exports.uploadFile = (req, res, next) => {
-  upload.single('archivo')(req, res, (err) => {
+  upload.single('imagen')(req, res, (err) => {
     if (err) {
       res.render('upload-error', { error: err.message });
     } else {
-      // Procesar el archivo subido según tus necesidades
-      res.render('upload-success');
+      // Verificar si no se ha seleccionado ningún archivo
+      if (!req.file) {
+        res.render('upload-error', { error: 'Debe seleccionar un archivo' });
+        return;
+      }
+      
+      // Validar la extensión del archivo
+      const allowedExtensions = ['.jpg', '.webp', '.png'];
+      const fileExtension = path.extname(req.file.originalname);
+      if (allowedExtensions.includes(fileExtension)) {
+        // Procesar el archivo subido según tus necesidades
+        res.render('upload-success');
+      } else {
+        res.render('upload-error', { error: 'El archivo debe ser formato JPG, WEBP o PNG' });
+      }
     }
   });
 };
