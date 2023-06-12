@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mostrar Imágenes</title>
+  <title>ArtHub</title>
 </head>
 <body>
-  <h1>Imágenes</h1>
-  <a href="/" class="a-upload">Ir inicio</a>
+
+  <h1>Galería</h1>
+  <p>En esta sección encontrarás los dibujos de otros usuarios y poder descargarlos gratuitamente</p>
   <% for (var i = 0; i < images.length; i++) { %>
     <img src="<%= basePath %>/<%= images[i] %>" alt="Imagen <%= i+1 %>">
   <% } %>

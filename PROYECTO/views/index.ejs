@@ -5,23 +5,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="resources/css/style.css">
-  <title>Welcome</title>
+  <title>Inicio</title>
   <style>      
       
   </style>
 </head>
 <body class="text-center">         
   <div class="contenedor">
-    <h1>Página de Inicio</h1>
+    <header class="navbar">
+      <%- include('./components/navbar.ejs') %>
+    </header>
+    <h1>ArtHub</h1>
+    <h2>El arte es lo que dejas salir</h2>
     <a href="/image-gallery" class="a-upload">galeria</a>
     <% if (login) { %>                
-      <h1>Usuario conectado: <strong><%= name %></strong></h1>  
+      <h1>Bienvenido: <strong><%= name %></strong></h1>  
       <% if (rol === 'dibujante') { %>
         <a href="/upload" class="a-upload">Ir a Formulario de Carga</a>
       <% } %>
       <a href="/logout" class="a-logout">Logout</a>
     <% } else { %>
-      <h1><strong><%= name %></strong></h1>   
+      <h1><strong>¿Quieres formar parte de nosotros? Unete</strong></h1>   
       <a href="/login" class="a-login">Ir a Login</a>
     <% } %>
   </div>
