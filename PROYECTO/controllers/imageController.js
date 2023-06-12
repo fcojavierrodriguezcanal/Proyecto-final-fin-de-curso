@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 exports.renderImageGallery = (req, res, next) => {
-  const directory = path.join(__dirname, '../uploads');
+  const directory = path.join(__dirname, '..', 'uploads');
 
   fs.readdir(directory, (err, files) => {
     if (err) {
@@ -15,6 +15,6 @@ exports.renderImageGallery = (req, res, next) => {
       return ['.jpg', '.jpeg', '.png', '.webp'].includes(extension);
     });
 
-    res.render('image-gallery', { images });
+    res.render('image-gallery', { images, basePath: '/uploads' });
   });
 };

@@ -1,6 +1,7 @@
 // 1 - Invocamos a Express
 const express = require('express');
 const app = express();
+const path = require('path');
 const User = require('./models/User');
 //2 - Para poder capturar los datos del formulario (sin urlencoded nos devuelve "undefined")
 app.use(express.urlencoded({extended:false}));
@@ -196,7 +197,7 @@ app.use(function(req, res, next) {
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     next();
 });
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
  //Logout
 //Destruye la sesión.
 app.get('/logout', function (req, res) {
