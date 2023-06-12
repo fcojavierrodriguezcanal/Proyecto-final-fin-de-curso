@@ -9,17 +9,19 @@ const storage = multer.diskStorage({
   },
 });
 
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+    const fileExtension = path.extname(file.originalname).toLowerCase();
 
-  const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-      if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/webp') {
-        cb(null, true);
-      } else {
-        cb(new Error('El archivo debe ser formato PNG, JPG o WEBP'));
-      }
-    },
-  });
+    if (allowedExtensions.includes(fileExtension)) {
+      cb(null, true);
+    } else {
+      cb(new Error('El archivo debe ser formato JPG, PNG o WEBP'));
+    }
+  },
+});
 
 // Controlador para manejar la subida de archivos
 exports.uploadFile = (req, res, next) => {
