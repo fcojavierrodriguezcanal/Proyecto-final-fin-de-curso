@@ -3,16 +3,20 @@
 <head>
   <title>ArtHub</title>
   <link rel="stylesheet" href="resources/css/style.css">
+  <link rel="icon" href="https://media.discordapp.net/attachments/920415005281775617/1117787663513161908/LOGO-removebg-preview.png" type="image/gif" sizes="16x16">
+
 </head>
 <body>
   <header class="navbar">
     <%- include('./components/navbar.ejs') %>
   </header>
-  <h1>Galería</h1>
-  <p>En esta sección encontrarás los dibujos de otros usuarios y poder descargarlos gratuitamente</p>
+  <h1 style="text-align: center;">Galería</h1>
+  <p style="text-align: center;">En esta sección encontrarás los dibujos de otros usuarios y poder descargarlos gratuitamente</p>
+  <div class="gallery">
   <% for (var i = 0; i < images.length; i++) { %>
     <img src="<%= basePath %>/<%= images[i] %>" alt="Imagen <%= i+1 %>">
   <% } %>
-  
+
+</div>
 </body>
 </html>
