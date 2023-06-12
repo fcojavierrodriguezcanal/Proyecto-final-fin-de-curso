@@ -30,11 +30,12 @@
       <% if (rol === 'dibujante') { %>
         <a href="/upload" class="a-upload">Ir a Formulario de Carga</a>
       <% } %>
-      <a href="/logout" class="a-logout">Logout</a>
+      <a href="/logout" class="a-logout">Salir</a>
     <% } else { %>
       <h1><strong>¿Quieres formar parte de nosotros? Unete</strong></h1>   
       <a href="/login" class="a-login">Unirse a ArtHub</a>
     <% } %>
   </div>
+  <%- include('./components/footer.ejs') %>
 </body>
 </html>
