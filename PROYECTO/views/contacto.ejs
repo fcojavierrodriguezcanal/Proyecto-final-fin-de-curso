@@ -2,30 +2,54 @@
 <html>
 <head>
   <title>Página de Contacto</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" href="resources/css/style.css">
+  <link rel="icon" href="https://media.discordapp.net/attachments/920415005281775617/1117787663513161908/LOGO-removebg-preview.png" type="image/gif" sizes="16x16">
+
 </head>
 <body>
   <header>
-    
+    <%- include('./components/navbar.ejs') %>
   </header>
+  <div style="text-align: center;">
   <h1>Contacto</h1>
+  <p>Necesitamos que aporteis ideas para mejorar por ello os dejamos una sección para poner vuestras quejas o sugerencias para seguir creciendo.</p>
+  </div>
+  
   <div>
-    <form action="submit_form.php" method="POST">
+    <form class="contactform">
       <label for="name">Nombre:</label>
       <input type="text" id="name" name="name" required>
-
-      <label for="email">Email:</label>
+  
+      <label for="email">Escribe aquí tu correo:</label>
       <input type="email" id="email" name="email" required>
-
-      <label for="message">Mensaje:</label>
+  
+      <label for="message">Mensaje para sugerencias o errores:</label>
       <textarea id="message" name="message" rows="5" required></textarea>
-
+  
       <button type="submit">Enviar</button>
     </form>
   </div>
+  
+  <script>
+    document.querySelector('.contactform').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+  
+    
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var message = document.getElementById('message').value;
+  
+      // Verificar si los campos están completos
+      if (name && email && message) {
+        
+        alert('El formulario se ha enviado correctamente');
+      } else {
+       
+        alert('Por favor, completa todos los campos del formulario');
+      }
+    });
+  </script>
+  <%- include('./components/footer.ejs') %>
 
-  <footer>
-    <p>&copy; 2023 Mi Empresa. Todos los derechos reservados.</p>
-  </footer>
 </body>
 </html>

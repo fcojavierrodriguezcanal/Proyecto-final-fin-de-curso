@@ -420,3 +420,106 @@ body {
   
   border: 2px solid #04253a;
 }
+.archivosubida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  padding: 20px;
+  width: 50%;
+  height: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.archivosubida h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.archivosubida form {
+  display: flex;
+  align-items: center;
+}
+
+.archivosubida input[type="file"] {
+  margin-right: 10px;
+}
+
+.archivosubida button {
+  padding: 10px 20px;
+  background-color: #04253a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.archivosubida button:hover {
+  background-color: #04253a;
+}
+.contactform {
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+
+.contactform label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.contactform input[type="text"],
+.contactform input[type="email"],
+.contactform textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.contactform textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.contactform button[type="submit"] {
+  
+  padding: 10px 20px;
+  background-color: #04253a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contactform button[type="submit"]:hover {
+  background-color: white;
+  color: #04253a;
+  border: 2px solid #04253a;
+}
+
+.success-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  color: #155724;
+}
